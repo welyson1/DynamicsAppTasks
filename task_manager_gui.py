@@ -23,7 +23,10 @@ class TaskManagerGUI:
         remove_button.pack(pady=5)
 
         complete_button = tk.Button(self.master, text="Complete Task", command=self.complete_task)
-        complete_button.pack(pady=5)        
+        complete_button.pack(pady=5)   
+
+        add_button = tk.Button(self.master, text="Add Task", command=self.add_task)
+        add_button.pack(pady=5)     
 
     def refresh_task_list(self):
         self.task_listbox.delete(0, tk.END)
@@ -42,6 +45,12 @@ class TaskManagerGUI:
         if selected_index:
             self.backend.mark_task_completed(selected_index[0])
             self.refresh_task_list()
+
+    def add_task(self):
+        new_task = self.add_task_entry.get()        
+        self.backend.add_task(new_task)
+        self.refresh_task_list()
+        self.add_task_entry.delete(0, tk.END)
 
 if __name__ == "__main__":
     root = tk.Tk()
