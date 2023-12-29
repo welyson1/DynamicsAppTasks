@@ -28,3 +28,7 @@ class TaskManagerBackend:
         if 0 <= index < len(self.tasks):
             self.tasks[index]["completed"] = True
             self.save_tasks()
+
+    def add_task(self, task):
+        self.tasks.append({"task": task, "completed": False})
+        self.save_tasks()
