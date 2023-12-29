@@ -31,4 +31,5 @@ class TaskManagerBackend:
 
     def add_task(self, task):
         self.tasks.append({"task": task, "completed": False})
+        
         self.save_tasks()
