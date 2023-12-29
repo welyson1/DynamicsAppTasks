@@ -91,13 +91,14 @@ class TaskManagerBackend:
 ```
 
 ### Tarefa 1
-A ultima tarefa para que a aplicação seja alançada é a implementação da adição de tarefas. Então...
+A ultima tarefa para que a aplicação seja lançada é a implementação da funcionalidade de adição de tarefas. Então...
 Dev backend deve adicionar o bloco de código abaixo no arquivo `task_manager_backend.py`
 ```Python
 def add_task(self, task):
     self.tasks.append({"task": task, "completed": False})
     self.save_tasks()
 ```
+
 Dev Front deve adicionar o bloco de código abaixo no arquivo `task_manager_gui.py`
 ```Python
 def add_task(self):
@@ -106,7 +107,9 @@ def add_task(self):
     self.refresh_task_list()
     self.add_task_entry.delete(0, tk.END)
 ```
+
 e as linhas abaixo dentro da função `__init__()`
+
 ```Python
 add_button = tk.Button(self.master, text="Add Task", command=self.add_task)
 add_button.pack(pady=5)
@@ -115,13 +118,13 @@ add_button.pack(pady=5)
 ### Tarefa 2
 QA, o experiente membro da equipe, recebeu a missão de testar a aplicação antes de colocá-la em produção. Confiante em sua habilidade, ele fez os testes adicionando e removendo as tarefas e tudo parecia funcionar bem.
 
-No GitHub somente de um marge da branch de Test para a branch de Prod
+No GitHub somente de um pull resquest da branch de Test para a branch de Prod
 
-### Tarefa 4
+### Tarefa 3
 Funcionalidade implementada, agora o cliente começa a usar a aplicação.
 Até que um dia foi notado que o bando de dados havia centenas de tarefas sem nome criadas.
 
-### Tarefa 5
+### Tarefa 4
 Novo membro na equipe... DevOps
 Agora vamos implementar o arquivo YAML para executar o teste, gerar a documentação automaticamente e gerar um arquivo .exe.
 ```YAML
@@ -223,30 +226,14 @@ jobs:
       - name: Build artifact
         run: pyinstaller --onefile task_manager_gui.py
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
-          tag_name: Prod-Release-${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/task_manager_gui
-          asset_name: task_manager_gui
-          asset_content_type: application/octet-stream
+          name: task_manager_gui
+          path: ./dist/task_manager_gui
 ```
 
-### Tarefa 6
+### Tarefa 5
 O QA deve..
 Crie um arquivo chamado `test_task_manager.py`
 
@@ -295,7 +282,7 @@ if __name__ == "__main__":
     unittest.main()
 ```
 
-### Tarefa 7
+### Tarefa 6
 O PO solicita para que o o dev backend inclua a verificação para que tarefas com o nome vazio não sejam colocadas no banco de dados.
 Dev Back deve... no aquivo `task_manager_backend.py` modificar a função de add tarefa como abaixo:
 ```python
